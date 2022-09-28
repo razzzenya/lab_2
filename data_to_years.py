@@ -150,8 +150,11 @@ def data_to_years(file_name: str):
                                 write_data_list = []
 
         else:
-            raise TypeError('No such file exists')
+            raise TypeError('No such file exists!')
 
+try:
+    file_name = 'result.csv'
+    data_to_years(file_name)
 
-file_name = 'result.csv'
-data_to_years(file_name)
+except TypeError:
+    print('No such file exists!')

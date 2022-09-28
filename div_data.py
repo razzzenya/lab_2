@@ -31,8 +31,11 @@ def divide_data(file_name : str):
                         writer.writerow((
                             elements[1], elements[2], elements[3], elements[4], elements[5], elements[6],))
         else:
-            raise TypeError('No such file exists')
+            raise TypeError('No such file exists!')
 
+try:
+    file_name = 'result.csv'
+    divide_data(file_name)
 
-file_name = 'result.csv'
-divide_data(file_name)
+except TypeError:
+    print('No such file exists!')
