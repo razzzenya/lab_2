@@ -2,3 +2,8 @@ Y.csv
 X.csv
 result.csv
 requirements.txt
+main.py
+divide_data_output
+divide_data_output//**
+data_to_years//**
+data_to_years
