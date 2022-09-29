@@ -14,7 +14,7 @@ def name_for_file(first_part: str, second_part: str) -> str:
     if __name__ == '__main__':
         f_p = first_part.replace('-', '')
         s_p = second_part.replace('-', '')
-        return 'data_to_years//' + f_p + '_' + s_p
+        return 'data_to_years//' + f_p + '_' + s_p + '.csv'
 
 
 def get_year_from_data(data: list[list[str]], index: int) -> int:
