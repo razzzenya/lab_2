@@ -1,6 +1,7 @@
 import csv
 import os
 
+
 def divide_data(file_name : str):
     """Function that divides date and data to different csv files
 

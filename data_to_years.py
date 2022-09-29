@@ -94,6 +94,14 @@ def get_day_from_data(data: list[list[str]], index: int) -> int:
 
 
 def data_to_years(file_name: str):
+    """Function that sorts data to different files where each individual file will correspond to one year
+
+    Args:
+        file_name (str): Path to file
+
+    Raises:
+        TypeError: No such file exists
+    """
     if __name__ == '__main__':
 
         if os.path.exists(file_name):
@@ -151,6 +159,7 @@ def data_to_years(file_name: str):
 
         else:
             raise TypeError('No such file exists!')
+
 
 try:
     file_name = 'result.csv'
