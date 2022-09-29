@@ -5,7 +5,7 @@ requirements.txt
 main.py
 divide_data_output
 divide_data_output//**
-data_to_years//**
-data_to_years
-data_to_weeks//**
-data_to_weeks
+data_to_years_output//**
+data_to_years_output
+data_to_weeks_output//**
+data_to_weeks_output

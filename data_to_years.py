@@ -14,7 +14,7 @@ def name_for_file(first_part: str, second_part: str) -> str:
     if __name__ == '__main__':
         f_p = first_part.replace('-', '')
         s_p = second_part.replace('-', '')
-        return 'data_to_years//' + f_p + '_' + s_p + '.csv'
+        return 'data_to_years_output//' + f_p + '_' + s_p + '.csv'
 
 
 def get_year_from_data(data: list[list[str]], index: int) -> int:
@@ -106,8 +106,8 @@ def data_to_years(file_name: str):
 
         if os.path.exists(file_name):
 
-            if not os.path.exists('data_to_years'):
-                os.mkdir('data_to_years')
+            if not os.path.exists('data_to_years_output'):
+                os.mkdir('data_to_years_output')
 
             with open(file_name, 'r', encoding='utf-8') as csvfile:
                 reader_object = list(csv.reader(csvfile, delimiter=","))
@@ -149,7 +149,9 @@ def data_to_years(file_name: str):
 
                     elif get_year_from_data(reader_object, elements) == last_year and get_month_from_data(reader_object, elements) == last_month:
                         write_data_list.append(reader_object[elements])
+                        
                         if get_day_from_data(reader_object, elements) == last_day:
+                            second_part_of_name = reader_object[elements][0]
                             with open(name_for_file(first_part_of_name, second_part_of_name), 'w', encoding='utf-8') as csv_file:
                                 writer = csv.writer(
                                     csv_file, lineterminator='\n')
@@ -158,12 +160,12 @@ def data_to_years(file_name: str):
                                 write_data_list = []
 
         else:
-            raise FileExistsError('No such file exists!')
+            raise FileNotFoundError('No such file exists!')
 
 
 try:
     file_name = 'result.csv'
     data_to_years(file_name)
 
-except FileExistsError:
+except FileNotFoundError:
     print('No such file exists!')
