@@ -1,8 +1,9 @@
 import csv
 import os
+from typing import NoReturn
 
 
-def divide_data(file_name : str):
+def divide_data(file_name: str) -> NoReturn:
     """Function that divides date and data to different csv files
 
     Args:
@@ -12,7 +13,7 @@ def divide_data(file_name : str):
         TypeError: No such file exists
     """
     if __name__ == '__main__':
-        
+
         if os.path.exists(file_name):
 
             if not os.path.exists('divide_data_output'):
@@ -32,7 +33,8 @@ def divide_data(file_name : str):
                         writer.writerow((
                             elements[1], elements[2], elements[3], elements[4], elements[5], elements[6],))
         else:
-            raise FileNotFoundError('No such file exists!')
+            raise FileNotFoundError
+
 
 try:
     file_name = 'result.csv'

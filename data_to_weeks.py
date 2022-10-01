@@ -1,6 +1,7 @@
 import csv
 import datetime
 import os
+from typing import NoReturn
 
 
 def get_year_from_data(data: list[list[str]], index: int) -> int:
@@ -141,7 +142,7 @@ def week_border(data: list[list[str]], index) -> list[str]:
             return (week)
 
 
-def weeks_writer(data: list[list[str]]):
+def weeks_writer(data: list[list[str]]) -> NoReturn:
     """A function that splits the original csv file into N files, where each individual file will correspond to one week.
     Args:
         data (list[list[str]]): A list with dates and data
@@ -179,7 +180,7 @@ def weeks_writer(data: list[list[str]]):
                         writer.writerow((j))
                     output = []
                     output.append(data[i])
-                    is_first = True
+                    first_part_of_name = data[i][0]
 
 
 def data_to_weeks(file_name: str):
@@ -203,7 +204,7 @@ def data_to_weeks(file_name: str):
                 weeks_writer(reader_object)
 
         else:
-            raise FileNotFoundError('No such file exists!')
+            raise FileNotFoundError
 
 
 try:

@@ -1,5 +1,6 @@
 import csv
 import os
+from typing import NoReturn
 
 
 def name_for_file(first_part: str, second_part: str) -> str:
@@ -41,59 +42,7 @@ def get_year_from_data(data: list[list[str]], index: int) -> int:
         return int(year)
 
 
-def get_month_from_data(data: list[list[str]], index: int) -> int:
-    """Gets the month from csv file
-
-    Args:
-        data (list[list[str]]): A list with dates and data
-        index (int): The index of the string that points on list in the list
-    Returns:
-        int: Value of month
-    """
-    if __name__ == '__main__':
-        date = data[index][0]
-        month = ''
-        dash_counter = 0
-        for numbers in date:
-
-            if numbers == '-':
-                dash_counter += 1
-                continue
-
-            if dash_counter == 1:
-                month += numbers
-
-            elif dash_counter == 2:
-                break
-
-        return int(month)
-
-
-def get_day_from_data(data: list[list[str]], index: int) -> int:
-    """Gets the day from csv file
-
-    Args:
-        data (list[list[str]]): A list with dates and data
-        index (int): The index of the string that points on list in the list
-
-    Returns:
-        int: Value of day
-    """
-    if __name__ == '__main__':
-        date = data[index][0]
-        day = ''
-        dash_counter = 0
-        for numbers in date:
-            if numbers == '-':
-                dash_counter += 1
-                continue
-
-            if dash_counter == 2:
-                day += numbers
-        return int(day)
-
-
-def data_to_years(file_name: str):
+def data_to_years(file_name: str) -> NoReturn:
     """Function that sorts data to different files where each individual file will correspond to one year
 
     Args:
@@ -112,55 +61,52 @@ def data_to_years(file_name: str):
             with open(file_name, 'r', encoding='utf-8') as csvfile:
                 reader_object = list(csv.reader(csvfile, delimiter=","))
 
-                row_count = sum(1 for row in reader_object)
-                last_year = get_year_from_data(reader_object, row_count - 1)
-                last_month = get_month_from_data(reader_object, row_count - 1)
-                last_day = get_day_from_data(reader_object, row_count - 1)
-
-                is_month_first = True
-                write_data_list = []
+                output = []
                 first_part_of_name = ''
                 second_part_of_name = ''
-                for elements in range(row_count):
-                    if get_year_from_data(reader_object, elements) != last_year and get_month_from_data(reader_object, elements) != 12:
-                        if is_month_first:
-                            first_part_of_name = reader_object[elements][0]
-                            is_month_first = False
-                        write_data_list.append(reader_object[elements])
+                is_first = True
+                current_year = get_year_from_data(reader_object, 0)
+                last_year = get_year_from_data(
+                    reader_object, len(reader_object) - 1)
 
-                    elif get_month_from_data(reader_object, elements) == 12 and get_year_from_data(reader_object, elements) != last_year:
-                        second_part_of_name = reader_object[elements][0]
-                        is_month_first = True
-                        write_data_list.append(reader_object[elements])
+                for i in range(len(reader_object)):
 
-                        if get_day_from_data(reader_object, elements) == 31:
+                    if current_year < last_year:
+
+                        if get_year_from_data(reader_object, i) == current_year:
+                            if is_first:
+                                first_part_of_name = reader_object[i][0]
+
+                            is_first = False
+                            output.append(reader_object[i])
+                            second_part_of_name = reader_object[i][0]
+
+                        elif get_year_from_data(reader_object, i) != current_year:
                             with open(name_for_file(first_part_of_name, second_part_of_name), 'w', encoding='utf-8') as csv_file:
                                 writer = csv.writer(
                                     csv_file, lineterminator='\n')
-                                for i in write_data_list:
-                                    writer.writerow((i))
-                                write_data_list = []
+                                for j in output:
+                                    writer.writerow((j))
+                                output = []
 
-                    elif get_year_from_data(reader_object, elements) == last_year and get_month_from_data(reader_object, elements) != last_month:
-                        if is_month_first:
-                            first_part_of_name = reader_object[elements][0]
-                            is_month_first = False
-                        write_data_list.append(reader_object[elements])
+                                first_part_of_name = reader_object[i][0]
+                                output.append(reader_object[i])
+                                current_year += 1
 
-                    elif get_year_from_data(reader_object, elements) == last_year and get_month_from_data(reader_object, elements) == last_month:
-                        write_data_list.append(reader_object[elements])
-                        
-                        if get_day_from_data(reader_object, elements) == last_day:
-                            second_part_of_name = reader_object[elements][0]
+                    elif current_year == last_year:
+
+                        output.append(reader_object[i])
+                        second_part_of_name = reader_object[i][0]
+
+                        if i + 1 == len(reader_object):
                             with open(name_for_file(first_part_of_name, second_part_of_name), 'w', encoding='utf-8') as csv_file:
                                 writer = csv.writer(
                                     csv_file, lineterminator='\n')
-                                for i in write_data_list:
-                                    writer.writerow((i))
-                                write_data_list = []
+                                for j in output:
+                                    writer.writerow((j))
 
         else:
-            raise FileNotFoundError('No such file exists!')
+            raise FileNotFoundError
 
 
 try:
