@@ -87,7 +87,6 @@ def data_to_years(file_name: str) -> NoReturn:
                                     csv_file, lineterminator='\n')
                                 current_year += get_year_from_data(
                                     reader_object, i) - get_year_from_data(output, 0)
-
                                 for j in output:
                                     writer.writerow((j))
                                 output = []
