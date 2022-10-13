@@ -64,7 +64,7 @@ def get_data_from_years_and_weeks(folder_name: str, date: datetime.date) -> list
             for root, dirs, files in os.walk(folder_name):
                 for file in files:
 
-                    with open(folder_name + '/' + file, 'r', encoding='utf-8') as csvfile:
+                    with open(os.path.join(folder_name, file), 'r', encoding='utf-8') as csvfile:
                         dates = list(csv.reader(csvfile, delimiter=","))
 
                         for i in range(len(dates)):
@@ -115,13 +115,12 @@ def get_data(file_name: str, date: datetime.date) -> list[str] or None:
 class DateIterator:
 
     def __init__(self):
-        self.counter = 0
+        if __name__ == '__main__':
+            self.counter = 0
+            self.file_name = 'result.csv'
 
-    def __next__(self, file_name: str) -> tuple:
+    def __next__(self) -> tuple:
         """_summary_
-
-        Args:
-            file_name (str): _description_
 
         Raises:
             FileNotFoundError: _description_
@@ -131,15 +130,12 @@ class DateIterator:
         """
         if __name__ == '__main__':
 
-            if os.path.exists(file_name):
-                with open(file_name, 'r', encoding='utf-8') as csvfile:
+            if os.path.exists(self.file_name):
+                with open(self.file_name, 'r', encoding='utf-8') as csvfile:
                     reader_object = list(csv.reader(csvfile, delimiter=","))
 
                     if self.counter == len(reader_object):
-                        self.counter = 0
-                        output = (reader_object[self.counter][0], reader_object[self.counter][1], reader_object[self.counter][2],
-                                  reader_object[self.counter][3], reader_object[self.counter][4], reader_object[self.counter][5], reader_object[self.counter][6])
-                        return output
+                        raise StopIteration
 
                     elif self.counter < len(reader_object):
                         self.counter += 1
@@ -149,59 +145,59 @@ class DateIterator:
             else:
                 raise FileNotFoundError
 
+if __name__ == '__main__':
+    try:
+        file_name = 'result.csv'
+        folder_name_years = 'data_to_years_output'
+        folder_name_weeks = 'data_to_weeks_output'
+        file_name_x = 'divide_data_output//X.csv'
+        file_name_y = 'divide_data_output//Y.csv'
 
-try:
-    file_name = 'result.csv'
-    folder_name_years = 'data_to_years_output'
-    folder_name_weeks = 'data_to_weeks_output'
-    file_name_x = 'divide_data_output//X.csv'
-    file_name_y = 'divide_data_output//Y.csv'
+        date = datetime.date(2010, 1, 5)
+        invalid_date = datetime.date(2222, 5, 20)
 
-    date = datetime.date(2010, 1, 5)
-    invalid_date = datetime.date(2222, 5, 20)
-    print(1)
-    obj = DateIterator()
-    # b = next(obj, file_name)
-    b = obj.__next__(file_name)
-    print(b)
+        obj = DateIterator()
+        
+        # print(next(obj))
 
-    b = obj.__next__(file_name)
-    print(b)
+        # print(next(obj))
 
-    b = obj.__next__(file_name)
-    print(b)
+        # print(next(obj))
+        
+        # while(True):
+        #     print(next(obj))
 
-    # # демонстрация работы функции с валидной датой
-    # result = get_data_from_x_y(file_name_x, file_name_y, date)
-    # print(result)
+        # # демонстрация работы функции с валидной датой
+        # result = get_data_from_x_y(file_name_x, file_name_y, date)
+        # print(result)
 
-    # # демонстрация работы функции с невалидной датой
-    # result = get_data_from_x_y(file_name_x, file_name_y, invalid_date)
-    # print(result)
+        # # демонстрация работы функции с невалидной датой
+        # result = get_data_from_x_y(file_name_x, file_name_y, invalid_date)
+        # print(result)
 
-    # # демонстрация работы функции с валидной датой
-    # result = get_data_from_years_and_weeks(folder_name_years, date)
-    # print(result)
+        # демонстрация работы функции с валидной датой
+        # result = get_data_from_years_and_weeks(folder_name_years, date)
+        # print(result)
 
-    # # демонстрация работы функции с невалидной датой
-    # result = get_data_from_years_and_weeks(folder_name_years, invalid_date)
-    # print(result)
+        # # демонстрация работы функции с невалидной датой
+        # result = get_data_from_years_and_weeks(folder_name_years, invalid_date)
+        # print(result)
 
-    # # демонстрация работы функции с валидной датой
-    # result = get_data_from_years_and_weeks(folder_name_weeks, date)
-    # print(result)
+        # # демонстрация работы функции с валидной датой
+        # result = get_data_from_years_and_weeks(folder_name_weeks, date)
+        # print(result)
 
-    # # демонстрация работы функции с невалидной датой
-    # result = get_data_from_years_and_weeks(folder_name_weeks, invalid_date)
-    # print(result)
+        # # демонстрация работы функции с невалидной датой
+        # result = get_data_from_years_and_weeks(folder_name_weeks, invalid_date)
+        # print(result)
 
-    # # демонстрация работы функции с валидной датой
-    # result = get_data(file_name, date)
-    # print(result)
+        # # демонстрация работы функции с валидной датой
+        # result = get_data(file_name, date)
+        # print(result)
 
-    # # демонстрация работы функции с невалидной датой
-    # result = get_data(file_name, invalid_date)
-    # print(result)
+        # # демонстрация работы функции с невалидной датой
+        # result = get_data(file_name, invalid_date)
+        # print(result)
 
-except FileNotFoundError:
-    print('No such file exists!')
+    except FileNotFoundError:
+        print('No such file exists!')

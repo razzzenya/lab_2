@@ -13,9 +13,9 @@ def name_for_file(first_part: str, second_part: str) -> str:
         str: Name in special format
     """
     if __name__ == '__main__':
-        f_p = first_part.replace('-', '')
-        s_p = second_part.replace('-', '')
-        return 'data_to_years_output//' + f_p + '_' + s_p + '.csv'
+        f_p = first_part.replace('-', '') + '_'
+        s_p = second_part.replace('-', '') + '.csv'
+        return os.path.join('data_to_years_output', f_p + s_p)
 
 
 def get_year_from_data(data: list[list[str]], index: int) -> int:
@@ -87,7 +87,7 @@ def data_to_years(file_name: str) -> NoReturn:
                                     csv_file, lineterminator='\n')
                                 current_year += get_year_from_data(
                                     reader_object, i) - get_year_from_data(output, 0)
-                                
+
                                 for j in output:
                                     writer.writerow((j))
                                 output = []
@@ -111,9 +111,10 @@ def data_to_years(file_name: str) -> NoReturn:
             raise FileNotFoundError
 
 
-try:
-    file_name = 'result.csv'
-    data_to_years(file_name)
+if __name__ == '__main__':
+    try:
+        file_name = 'result.csv'
+        data_to_years(file_name)
 
-except FileNotFoundError:
-    print('No such file exists!')
+    except FileNotFoundError:
+        print('No such file exists!')

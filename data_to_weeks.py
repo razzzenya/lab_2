@@ -90,9 +90,9 @@ def name_for_file(first_part: str, second_part: str) -> str:
         str: Name in special format
     """
     if __name__ == '__main__':
-        f_p = first_part.replace('-', '')
-        s_p = second_part.replace('-', '')
-        return 'data_to_weeks_output//' + f_p + '_' + s_p + '.csv'
+        f_p = first_part.replace('-', '') + '_'
+        s_p = second_part.replace('-', '') + '.csv'
+        return os.path.join('data_to_weeks_output', f_p + s_p)
 
 
 def week_border(data: list[list[str]], index) -> list[str]:
@@ -206,10 +206,10 @@ def data_to_weeks(file_name: str):
         else:
             raise FileNotFoundError
 
+if __name__ == '__main__':
+    try:
+        file_name = 'result.csv'
+        data_to_weeks(file_name)
 
-try:
-    file_name = 'result.csv'
-    data_to_weeks(file_name)
-
-except FileNotFoundError:
-    print('No such file exists!')
+    except FileNotFoundError:
+        print('No such file exists!')

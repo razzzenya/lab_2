@@ -35,10 +35,10 @@ def divide_data(file_name: str) -> NoReturn:
         else:
             raise FileNotFoundError
 
+if __name__ == '__main__':
+    try:
+        file_name = 'result.csv'
+        divide_data(file_name)
 
-try:
-    file_name = 'result.csv'
-    divide_data(file_name)
-
-except FileNotFoundError:
-    print('No such file exists!')
+    except FileNotFoundError:
+        print('No such file exists!')
