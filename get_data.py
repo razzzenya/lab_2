@@ -120,14 +120,7 @@ class DateIterator:
             self.file_name = 'result.csv'
 
     def __next__(self) -> tuple:
-        """_summary_
-
-        Raises:
-            FileNotFoundError: _description_
-
-        Returns:
-            tuple: _description_
-        """
+        
         if __name__ == '__main__':
 
             if os.path.exists(self.file_name):
@@ -175,7 +168,7 @@ if __name__ == '__main__':
         # result = get_data_from_x_y(file_name_x, file_name_y, invalid_date)
         # print(result)
 
-        # демонстрация работы функции с валидной датой
+        # # демонстрация работы функции с валидной датой
         # result = get_data_from_years_and_weeks(folder_name_years, date)
         # print(result)
 

@@ -12,14 +12,6 @@ class DateIterator:
             self.file_name = 'result.csv'
 
     def __next__(self) -> tuple:
-        """_summary_
-
-        Raises:
-            FileNotFoundError: _description_
-
-        Returns:
-            tuple: _description_
-        """
         if __name__ == '__main__':
 
             if os.path.exists(self.file_name):
