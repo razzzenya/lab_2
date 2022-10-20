@@ -14,18 +14,17 @@ def get_year_from_data(data: list[list[str]], index: int) -> int:
     Returns:
         int: Value of year
     """
-    if __name__ == '__main__':
-        date = data[index][0]
-        year = ''
-        for numbers in date:
+    date = data[index][0]
+    year = ''
+    for numbers in date:
 
-            if numbers != '-':
-                year += numbers
+        if numbers != '-':
+            year += numbers
 
-            else:
-                break
+        else:
+            break
 
-        return int(year)
+    return int(year)
 
 
 def get_month_from_data(data: list[list[str]], index: int) -> int:
@@ -37,23 +36,22 @@ def get_month_from_data(data: list[list[str]], index: int) -> int:
     Returns:
         int: Value of month
     """
-    if __name__ == '__main__':
-        date = data[index][0]
-        month = ''
-        dash_counter = 0
-        for numbers in date:
+    date = data[index][0]
+    month = ''
+    dash_counter = 0
+    for numbers in date:
 
-            if numbers == '-':
-                dash_counter += 1
-                continue
+        if numbers == '-':
+            dash_counter += 1
+            continue
 
-            if dash_counter == 1:
-                month += numbers
+        if dash_counter == 1:
+            month += numbers
 
-            elif dash_counter == 2:
-                break
+        elif dash_counter == 2:
+            break
 
-        return int(month)
+    return int(month)
 
 
 def get_day_from_data(data: list[list[str]], index: int) -> int:
@@ -66,18 +64,17 @@ def get_day_from_data(data: list[list[str]], index: int) -> int:
     Returns:
         int: Value of day
     """
-    if __name__ == '__main__':
-        date = data[index][0]
-        day = ''
-        dash_counter = 0
-        for numbers in date:
-            if numbers == '-':
-                dash_counter += 1
-                continue
+    date = data[index][0]
+    day = ''
+    dash_counter = 0
+    for numbers in date:
+        if numbers == '-':
+            dash_counter += 1
+            continue
 
-            if dash_counter == 2:
-                day += numbers
-        return int(day)
+        if dash_counter == 2:
+            day += numbers
+    return int(day)
 
 
 def name_for_file(first_part: str, second_part: str) -> str:
@@ -89,10 +86,9 @@ def name_for_file(first_part: str, second_part: str) -> str:
     Returns:
         str: Name in special format
     """
-    if __name__ == '__main__':
-        f_p = first_part.replace('-', '') + '_'
-        s_p = second_part.replace('-', '') + '.csv'
-        return os.path.join('data_to_weeks_output', f_p + s_p)
+    f_p = first_part.replace('-', '') + '_'
+    s_p = second_part.replace('-', '') + '.csv'
+    return os.path.join('data_to_weeks_output', f_p + s_p)
 
 
 def week_border(data: list[list[str]], index) -> list[str]:
@@ -104,42 +100,41 @@ def week_border(data: list[list[str]], index) -> list[str]:
     Returns:
         list[str]: A list of the days of one week
     """
-    if __name__ == '__main__':
 
-        date = datetime.date(get_year_from_data(data, index), get_month_from_data(
-            data, index), get_day_from_data(data, index))
-        weekday = date.isoweekday()
+    date = datetime.date(get_year_from_data(data, index), get_month_from_data(
+        data, index), get_day_from_data(data, index))
+    weekday = date.isoweekday()
 
-        week = []
+    week = []
 
-        if weekday == 1:
+    if weekday == 1:
 
-            week.append(str(date))
+        week.append(str(date))
 
-            for i in range(1, 7):
-                week.append(str(date + datetime.timedelta(days=i)))
+        for i in range(1, 7):
+            week.append(str(date + datetime.timedelta(days=i)))
 
-            return (week)
+        return (week)
 
-        elif weekday != 7 and weekday != 1:
-            for i in range(weekday - 1, 0, -1):
-                week.append(str(date - datetime.timedelta(days=i)))
+    elif weekday != 7 and weekday != 1:
+        for i in range(weekday - 1, 0, -1):
+            week.append(str(date - datetime.timedelta(days=i)))
 
-            week.append(str(date))
+        week.append(str(date))
 
-            for i in range(1, 8 - weekday):
-                week.append(str(date + datetime.timedelta(days=i)))
+        for i in range(1, 8 - weekday):
+            week.append(str(date + datetime.timedelta(days=i)))
 
-            return (week)
+        return (week)
 
-        elif weekday == 7:
+    elif weekday == 7:
 
-            for i in range(6, 0, -1):
-                week.append(str(date - datetime.timedelta(days=i)))
+        for i in range(6, 0, -1):
+            week.append(str(date - datetime.timedelta(days=i)))
 
-            week.append(str(date))
+        week.append(str(date))
 
-            return (week)
+        return (week)
 
 
 def weeks_writer(data: list[list[str]]) -> NoReturn:
@@ -147,40 +142,39 @@ def weeks_writer(data: list[list[str]]) -> NoReturn:
     Args:
         data (list[list[str]]): A list with dates and data
     """
-    if __name__ == '__main__':
 
-        first_part_of_name = ''
-        second_part_of_name = ''
-        output = []
-        border = week_border(data, 0)
-        is_first = True
+    first_part_of_name = ''
+    second_part_of_name = ''
+    output = []
+    border = week_border(data, 0)
+    is_first = True
 
-        for i in range(len(data)):
+    for i in range(len(data)):
 
-            day_in_week = False
+        day_in_week = False
 
-            for date in border:
+        for date in border:
 
-                if data[i][0] == date:
+            if data[i][0] == date:
 
-                    if is_first:
-                        first_part_of_name = data[i][0]
-                        is_first = False
-                    day_in_week = True
-                    second_part_of_name = data[i][0]
-                    output.append(data[i])
-                    break
-
-            if day_in_week == False:
-
-                border = week_border(data, i)
-                with open(name_for_file(first_part_of_name, second_part_of_name), 'w', encoding='utf-8') as csv_file:
-                    writer = csv.writer(csv_file, lineterminator='\n')
-                    for j in output:
-                        writer.writerow((j))
-                    output = []
-                    output.append(data[i])
+                if is_first:
                     first_part_of_name = data[i][0]
+                    is_first = False
+                day_in_week = True
+                second_part_of_name = data[i][0]
+                output.append(data[i])
+                break
+
+        if day_in_week == False:
+
+            border = week_border(data, i)
+            with open(name_for_file(first_part_of_name, second_part_of_name), 'w', encoding='utf-8') as csv_file:
+                writer = csv.writer(csv_file, lineterminator='\n')
+                for j in output:
+                    writer.writerow((j))
+                output = []
+                output.append(data[i])
+                first_part_of_name = data[i][0]
 
 
 def data_to_weeks(file_name: str):
@@ -192,19 +186,18 @@ def data_to_weeks(file_name: str):
     Raises:
         FileNotFoundError: File does not exist
     """
-    if __name__ == '__main__':
 
-        if os.path.exists(file_name):
+    if os.path.exists(file_name):
 
-            if not os.path.exists('data_to_weeks_output'):
-                os.mkdir('data_to_weeks_output')
+        if not os.path.exists('data_to_weeks_output'):
+            os.mkdir('data_to_weeks_output')
 
-            with open(file_name, 'r', encoding='utf-8') as csvfile:
-                reader_object = list(csv.reader(csvfile, delimiter=","))
-                weeks_writer(reader_object)
+        with open(file_name, 'r', encoding='utf-8') as csvfile:
+            reader_object = list(csv.reader(csvfile, delimiter=","))
+            weeks_writer(reader_object)
 
-        else:
-            raise FileNotFoundError
+    else:
+        raise FileNotFoundError
 
 if __name__ == '__main__':
     try:
